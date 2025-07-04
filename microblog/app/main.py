@@ -49,6 +49,8 @@ app.mount("/favicon.ico", StaticFiles(directory=frontend_path), name="favicon")
 def serve_frontend():
     return FileResponse(frontend_path / "index.html")
 
-@app.get("/ping")
-def ping():
-    return {"message": "pong"}
+# Fallback для всех путей
+@app.get("/{full_path:path}")
+def spa_fallback(full_path: str):
+    return FileResponse(frontend_path / "index.html")
+
